@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dong"> 
+	<!-- 由于数据库的字段和属性名一样，就没有写映射 -->
+	
+	<select id="sel" parameterType="map" resultType="dongtai.empl">	<!-- 根据传入的参数动态查询 -->
+		select eid,ename,eage from emp  <!-- 这里会自动加上1=1，以便于连接后面的语句 -->
+		<where>
+			<if test="one != null">
+				  eid = #{one}		<!-- 也可以不写and -->
+			</if>
+			<if test="two != null">
+				 and ename = #{two}
+			</if>
+			<if test="three != null">
+				 and eage = #{three}
+			</if>
+		</where>
+	</select>
+	
+	<update id="u" parameterType="map">	<!-- 动态更新 -->
+		update emp 
+		<set>
+			<if test="二 != null">
+				ename = #{二}
+			</if>
+			<if test="三 != null">
+				eage = #{三}
+			</if>
+		</set>
+		where eid = #{一}
+	</update>
+	
+	<delete id="de"> <!-- 动态删除(数组的形式) -->
+		delete from emp where eid in 
+		<foreach collection="array" open="(" close=")" separator="," item="xxx"> <!-- 迭代数组；open表示开始，close表示以什么结束，separator表示以什么分隔，item表示迭代的对象(可以是任意的，但不建议) -->
+			 #{xxx} <!-- 获取数组中的值，需要与item中的保持一致 -->
+		</foreach>
+	</delete>
+	<select id="dee">	<!-- list的形式 -->
+		delete from emp where eid in
+		<foreach collection="list" open="(" close=")" separator="," item="xx">
+			#{xx}
+		</foreach>
+	</select>
+	
+	<insert id="in" parameterType="dongtai.empl"> <!-- 动态插入，include表示引入的sql片段 -->
+		insert into emp (<include refid="sq1"></include>) values (<include refid="sq2"></include>)
+	</insert>
+	
+		<sql id="sq1"> <!-- sql片段，这里面要写逗号，否则不行 -->
+		  <trim suffixOverrides=",">	<!-- 去掉最后一个的空格 -->
+			<if test="eid !=null">
+				eid,
+			</if>
+			<if test="ename !=null">
+				ename,
+			</if>
+			<if test="eage !=null">
+				eage,
+			</if>
+		  </trim>	
+		</sql>
+		<sql id="sq2">
+		   <trim suffixOverrides=",">
+			<if test="eid !=null">
+				#{eid},
+			</if>
+			<if test="ename !=null">
+				#{ename},
+			</if>
+			<if test="eage !=null">
+				#{eage},
+			</if>
+		   </trim>	
+		</sql>
+		
+</mapper>
+

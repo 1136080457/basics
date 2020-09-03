@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="my"> 
+	<!-- 由于数据库的字段和属性名一样，就没有写映射 -->
+	
+	<select id="lim" parameterType="map" resultType="fy.empl">	<!-- 分页，将数据放到map中了 -->
+		select eid,ename,eage from emp limit #{one},#{two}
+	</select>
+</mapper>
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="k">
+	<resultMap type="one2many.xueke" id="ke">
+		<id property="id" column="keid"/>
+		<result property="name" column="kename"/>
+		
+	</resultMap>
+	
+	<select id="se" parameterType="int" resultMap="s.h"> 	<!-- 查询结果的信息在学生类中有对应的属性，去接收就可以了；也可以用其他包含结果属性的类取接收 -->
+		select x1.xname,x1.kid,x2.keid,x1.xid from xuesheng x1,xueke x2 where x1.kid = x2.keid and x2.keid = #{id}
+	</select>
+</mapper>

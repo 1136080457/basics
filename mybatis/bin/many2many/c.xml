@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cc">
+	<resultMap type="many2many.Course" id="cmap">
+		<id property="id" column="cid"/>
+		<result property="name" column="cname"/>
+	</resultMap>
+
+	
+	<select id="st" parameterType="string" resultMap="pp.pmap">
+		select p.pname,p.pid from course c,people p,middle m where c.cid = m.mcd and p.pid = m.mpd and c.cname = #{xx}
+	
+	</select>
+</mapper>

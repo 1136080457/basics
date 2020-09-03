@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="one2one.Student">
+	<resultMap type="one2one.Student" id="student">
+		<id property="id" column="sid"/>
+		<result property="name" column="sname"/>
+		<association property="card" resultMap="one2one.IDcard.card"></association> <!-- 引入映射文件；student类的外键字段和关联的表的映射 -->
+	</resultMap>
+
+	
+	
+	<select id="sse" resultMap="student" parameterType="int">
+		select s.sname,s.scid,c.num,c.cid from student s,card c where s.scid = c.cid and s.sid = #{id}
+	</select>
+	<select id="ssee" resultMap="student" parameterType="string">
+		select s.sid,s.scid,c.num,c.cid from student s,card c where s.scid = c.cid and s.sname = #{name}
+	</select>
+</mapper>

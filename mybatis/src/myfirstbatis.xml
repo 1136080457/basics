@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- mybatis总配置文件 -->
+<configuration>
+
+	<properties resource="one/db.properties"></properties>	<!-- 加载数据库的信息文件 -->
+	
+	<!-- 给映射文件的名称空间取的别名：分别是原来的名字和别名(如果原来的名称空间是实体类的全路径，那么映射文件中其他地方用到实体类的全路径的地方，也可以写此别名)
+	<typeAliases><typeAlias type="my" alias="m"/></typeAliases>
+	 -->
+	 
+	<environments default="mysql"> <!-- 指定当前所使用的数据库环境，只能使用一个 -->
+		<environment id="mysql"> <!-- 给这个数据库环境取一个名字 -->	
+			<transactionManager type="jdbc"></transactionManager> <!-- 使用jdbc事务管理的方式 -->
+			<dataSource type="pooled"> <!-- 属于数据连接池来获取连接 -->
+				<!--  
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://localhost:3306/daydayup"/>
+				<property name="username" value="root"/>
+				<property name="password" value="root"/>
+				-->
+				<property name="driver" value="${driver}"/> 	<!-- 根据加载的数据库信息文件来取值 -->
+				<property name="url" value="${mysql.url}"/>
+				<property name="username" value="${mysql.username}"/>
+				<property name="password" value="${mysql.password}"/>
+			</dataSource>
+		</environment>
+	
+		<environment id="myoracle">	<!-- 可以有多个数据库，但是只能使用一个(如果当前没有被使用的数据库配置不正确，程序也可以正常运行) -->
+			<transactionManager type=""></transactionManager>
+			<dataSource type=""></dataSource>
+		</environment>
+		
+	</environments>
+	
+	<mappers>	<!-- 加载映射文件 -->
+	<mapper resource="one/emp.mapping.xml"/>
+	<mapper  resource="fy/empl.mapping.xml"/>
+	<mapper  resource="dongtai/empl.mapping.xml"/>
+	<mapper resource="one2one/idcard.xml"/>
+	<mapper resource="one2one/student.xml"/>
+	<mapper resource="one2many/ke.xml"/>
+	<mapper resource="one2many/sheng.xml"/>
+	<mapper resource="many2many/c.xml"/>
+	<mapper resource="many2many/p.xml"/>
+	</mappers>
+	
+</configuration>
